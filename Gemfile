@@ -13,10 +13,10 @@ gem 'thin'
 gem 'shotgun'
 gem 'json', '>=1.8.3'
 gem 'bcrypt'
+gem 'pry'
 
 group :test do
   gem 'rspec'
-  gem 'pry'
   gem 'pry-nav'
   gem 'capybara'
   gem 'rack-test'
