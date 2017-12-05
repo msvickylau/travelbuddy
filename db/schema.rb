@@ -13,22 +13,21 @@
 ActiveRecord::Schema.define(version: 20171204032357) do
 
   create_table "comments", force: :cascade do |t|
-    t.string "content"
-    t.datetime "datetime"
     t.integer "user_id"
     t.integer "post_id"
+    t.string "content"
+    t.datetime "datetime"
   end
 
   create_table "destinations", force: :cascade do |t|
-    t.string "location"
-    t.integer "user_id"
+    t.string "country"
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string "name"
+    t.integer "user_id"
+    t.string "title"
     t.string "content"
     t.datetime "datetime"
-    t.integer "user_id"
   end
 
   create_table "user_destinations", force: :cascade do |t|
@@ -38,6 +37,7 @@ ActiveRecord::Schema.define(version: 20171204032357) do
 
   create_table "users", force: :cascade do |t|
     t.string "username"
+    t.string "email"
     t.string "password_digest"
   end
 
