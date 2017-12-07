@@ -11,6 +11,7 @@ class PostsController < ApplicationController
 
   get '/posts/new' do
     if logged_in?
+      @destinations = Destination.all
       erb :'posts/new'
     else
       redirect to '/login'
@@ -35,6 +36,8 @@ class PostsController < ApplicationController
   get '/posts/:id' do
     if logged_in?
       @post = Post.find_by_id(params[:id])
+      @time_ago = Time.now - @post.created_at
+
       erb :'posts/show'
     else
       redirect to '/login'

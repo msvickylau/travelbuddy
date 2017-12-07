@@ -21,11 +21,14 @@
 
   <br><br>
 
-  Select all destinaion tags......
-  make checkbox types
+  Select all destinaion tags<br>
+
+  <% @destinations.each do |destination| %>
+    <input type="checkbox" value="<%= destination.country %>" id="<%= destination.country %>"><%= destination.country %></input>
+  <% end %>
 
   <br><br>
   <input type="submit" value="post"></input>
 
-
 </form>
+
