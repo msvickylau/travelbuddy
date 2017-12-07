@@ -14,6 +14,7 @@ gem 'shotgun'
 gem 'json', '>=1.8.3'
 gem 'bcrypt'
 gem 'pry'
+gem 'rails-erd'
 
 group :test do
   gem 'rspec'
