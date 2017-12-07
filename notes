@@ -1,22 +1,30 @@
-Travel buddy app were users can create an account, pick a destination, create a post, and write comments on posts.
-A User can delete their own post only, and any comments under that post will be deleted regardless of the author.
+Travel buddy app were users can create an account/sign in, view what others have posted on their travels, and comment on their post. Or they can create their own post by selecting the destination(s), writing contnet of their travels, posting it and reply with comments on posts.
+
+A User can delete their own post only, and any comments under that post will be deleted regardless of the author. Users can delete a comment from a published post.
+
 
 MODELS
 
-USER
-* A user has_many destinations
-* A user has_many posts
-* A user has_many comments
+  USER -- POST == DESTINATION
+    |     /
+   COMMENTS
 
-DESTINATION
-* A destination has_many users
-* A destination has_many posts
+  USER
+  * A user has_many posts
+  * A user has_many comments
 
-POST
-* A post has_many comments
-* A post belongs_to a destination
-* A post belongs_to a user
+  DESTINATION
+  * A destination has_many posts (many to many)
 
-COMMENTS
-* A comment belongs_to a post
-* A comment belongs_to a user
+  POST
+  * A post has_many comments
+  * A post has_many a destination (many to many)
+  * A post belongs_to a user
+
+  COMMENTS
+  * A comment belongs_to a post
+  * A comment belongs_to a user
+
+
+
+
