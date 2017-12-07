@@ -1,9 +1,11 @@
 <h1>Posts</h1>
 
 <% @posts.each do |post| %>
-  <h4><%= post.title %> </h4>
+  ----------------
+  <h4> <a href="/posts/<%= post.id %>"><%= post.title %></a> </h4>
+  posted by: <%= post.user_id %>,  on  <%= post.created_at %> <br>
   <%= post.content %> 
   <br><br>
-  <%= post.created_at %>
-  <br><br><br>
+
 <% end %>
+
