@@ -16,7 +16,8 @@ ActiveRecord::Schema.define(version: 20171206032838) do
     t.integer "user_id"
     t.integer "post_id"
     t.string "content"
-    t.datetime "datetime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "destinations", force: :cascade do |t|
@@ -32,7 +33,10 @@ ActiveRecord::Schema.define(version: 20171206032838) do
     t.integer "user_id"
     t.string "title"
     t.string "content"
-    t.datetime "datetime"
+    t.date "start_date"
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
