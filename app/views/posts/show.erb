@@ -1,5 +1,12 @@
- <h4><%= @post.title %> </h4>
+ <h4> <%= @post.title %> </h4>
  <%= @post.content %> 
  <br><br>
  Posted on <%= @post.created_at %> , <%= @time_ago %> seconds ago.
- <br><br>
+
+
+<h3>Destination tags</h3>
+
+  <% @post.destinations.each do |d| %>
+    <%= d.country %> | 
+  <% end %>
+

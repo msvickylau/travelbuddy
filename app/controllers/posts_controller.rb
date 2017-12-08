@@ -22,15 +22,17 @@ class PostsController < ApplicationController
     if params[:title] == "" || params[:content] == "" || params[:start_date] == "" || params[:end_date] == ""
       redirect to '/posts/new'
     else
-      @post = current_user.posts.create(
+      @post = Post.create(
         title: params[:post][:title], 
         content: params[:post][:content], 
         start_date: params[:post][:start_date], 
         end_date: params[:post][:end_date], 
         user_id: session[:user_id]
         )
-      redirect to "/posts/#{@post.id}"
     end
+    @post.save
+
+    redirect to "/posts/#{@post.id}"
   end
 
   get '/posts/:id' do

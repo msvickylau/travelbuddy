@@ -23,12 +23,11 @@
 
   Select all destinaion tags<br>
 
-  <% @destinations.each do |destination| %>
-    <input type="checkbox" value="<%= destination.country %>" id="<%= destination.country %>"><%= destination.country %></input>
+  <% @destinations.each do |d| %>
+    <input type="checkbox" name="post[destination_id][]" value="<%= d.id %>" id="destination_<%= d.id %>"><%= d.country %></input><br>
   <% end %>
 
   <br><br>
-  <input type="submit" value="post"></input>
+  <input type="submit" value="Create New Post"></input>
 
 </form>
-
