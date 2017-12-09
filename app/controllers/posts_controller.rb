@@ -22,26 +22,14 @@ class PostsController < ApplicationController
       flash[:message] = "Must fill in all parts"
       redirect to '/posts/new'
     else
-      @post = Post.create( #params[:post])
-        {
-          title: params[:post][:title], 
-          content: params[:post][:content], 
-          start_date: params[:post][:start_date], 
-          end_date: params[:post][:end_date], 
-          user_id: session[:user_id],
-          destination_ids: params[:destination_ids]
-        }
-      
-     
+      @post = Post.create(params[:post])
       @post.save
     end
-    # binding.pry
     redirect to "/posts/#{@post.id}"
   end
 
   get '/posts/:id' do
     if logged_in?
-
       @post = Post.find_by_id(params[:id])
       @time_ago = Time.now - @post.created_at
 

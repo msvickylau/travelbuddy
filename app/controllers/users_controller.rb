@@ -13,9 +13,12 @@ class UsersController < ApplicationController
     end
   end
 
+
+  #does not let a user sign up with a username/email/password
   post '/signup' do
     if params[:username] == "" || params[:email] == "" || params[:password] == ""
-      redirect to '/signup'  #how can you raise an error here? "You must fill in the all parts of the form to create an account."
+      flash[:message] = "Please don't leave blank content"
+      redirect to '/signup'
     else
       @user = User.create(username: params[:username], email: params[:email], password: params[:password])
       @user.save
@@ -38,14 +41,15 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect '/posts' #in posts_controller.
     else
-      redirect to '/login'
+      flash[:message] = "The username/password you've entered is incorrect. Please try again."
+      redirect_if_not_logged_in
     end
   end
 
   get '/logout' do
     if logged_in?
       session.clear
-      redirect to '/login'
+      redirect_if_not_logged_in
     else
       redirect to '/'
     end
