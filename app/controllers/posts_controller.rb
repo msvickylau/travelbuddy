@@ -2,7 +2,6 @@ class PostsController < ApplicationController
   
   get '/posts' do
     if logged_in?
-      @user = User.find_by_id(session[:user_id])
       @posts = Post.all
       erb :'posts/index'
     else
@@ -23,9 +22,7 @@ class PostsController < ApplicationController
       flash[:message] = "Must fill in all parts"
       redirect to '/posts/new'
     else
-      post = params[:post] #all post params
-      post[:user_id] = session[:user_id] 
-      @post = Post.create(params[:post]) #create post with all post params and user_id
+      @post = Post.create(params[:post])
       @post.save
     end
     redirect to "/posts/#{@post.id}"
