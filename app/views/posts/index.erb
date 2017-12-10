@@ -1,9 +1,30 @@
-<h1>Posts</h1>
+<header>
+  <div align= "right">
+    <!-- if the user is currently logged in, they can logout -->
+    <% if session[:user_id] != nil %>
+      <a href="/posts/new"><input type="button" value="New Post" /></a>
+      <a href="/logout"><input type="button" value="Log Out" /></a>
+      <div align= "left">
+        <a>You are logged in as <%=@user.username%>.</a><br>
+      </div>
+
+    <!-- If the user is not logged in, they can sign in or create an account -->
+    <% else %>
+      <a href="/signup"><input type="button" value="Sign Up" /></a>
+      <a href="/login"><input type="button" value="Log In" /></a>
+    <%end%>
+  </div>
+</header>
+
+
+<h1>View posts from community members:</h1>
 
 <% @posts.each do |post| %>
   ----------------
   <h4> <a href="/posts/<%= post.id %>"><%= post.title %></a> </h4>
-  posted by: <%= post.user_id %>,  on  <%= post.created_at %> <br>
+  posted by: <%= post.user_id %>, 
+  
+  on  <%= post.created_at %> <br>
   <%= post.content %> 
   <br><br>
 
