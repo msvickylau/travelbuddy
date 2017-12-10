@@ -1,13 +1,16 @@
- <h4> <%= @post.title %> </h4>
+ <h1> <%= @post.title %> </h1>
  
- <%= @post.content %> 
+ posted by: <%= @post.user_id %>,  on  <%= @post.updated_at %>, <%= @time_ago %> seconds ago.
  <br><br>
- Posted on <%= @post.created_at %> , <%= @time_ago %> seconds ago.
-
+ <%= @post.content %> 
 
 <h3>Destination tags</h3>
+  |  <% @post.destinations.each { |d| %> <%= d.country %>  | <% } %>
 
-  <% @post.destinations.each do |d| %>
-    <%= d.country %> | 
-  <% end %>
+<br><br>
+<!-- User can see edit button, if it is their post -->
+<% if @post.user_id == current_user.id %>
+  <a href="/posts/<%=@post.id%>/edit" ><input type="button" value="Edit Your Post" /></a>      
+<%end%>
+
 

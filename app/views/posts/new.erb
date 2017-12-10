@@ -7,7 +7,7 @@
   </div>
   <div>
     <label for="post_content">Content</label>
-    <textarea type="text" id="post_content" name="post[content]"></textarea>
+    <input type="text" id="post_content" name="post[content]"></input>
   </div>
   <div>
     <label for="start_date">Start Date</label>
@@ -20,7 +20,7 @@
 
   <br><br>
 
-  Select all destinaion tags<br>
+  <h3>Select all destinaion tags</h3>
 
   <% Destination.all.each do |d| %>
     <input type="checkbox" name="post[destination_ids][]" value="<%= d.id %>" id="destination_<%= d.id %>">
