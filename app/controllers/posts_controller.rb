@@ -22,7 +22,9 @@ class PostsController < ApplicationController
       flash[:message] = "Must fill in all parts"
       redirect to '/posts/new'
     else
-      @post = Post.create(params[:post])
+      post = params[:post] #all post params
+      post[:user_id] = session[:user_id] 
+      @post = Post.create(post) #create post with all post params and user_id
       @post.save
     end
     redirect to "/posts/#{@post.id}"
