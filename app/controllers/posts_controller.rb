@@ -32,19 +32,21 @@ class PostsController < ApplicationController
     redirect to "/posts/#{@post.id}"
   end
 
-  get '/posts/:id' do
+  get '/posts/:post_id' do  #also index page for comments
     if logged_in?
-      @post = Post.find_by_id(params[:id])
+      @post = Post.find_by_id(params[:post_id])
+      @comments = Comment.where("post_id = #{@post.id}") #all comments where post id is == the current post id
       @time_ago = Time.now - @post.updated_at
+      binding.pry
       erb :'posts/show'
     else
       redirect_if_not_logged_in
     end
   end
 
-  get '/posts/:id/edit' do
+  get '/posts/:post_id/edit' do
     if logged_in?
-      @post = Post.find_by_id(params[:id])
+      @post = Post.find_by_id(params[:post_id])
       if @post.user_id == current_user.id
        erb :'posts/edit'
       else
@@ -55,9 +57,9 @@ class PostsController < ApplicationController
     end
   end
 
-  patch '/posts/:id' do
+  patch '/posts/:post_id' do
     if logged_in?
-      @post = Post.find_by_id(params[:id])
+      @post = Post.find_by_id(params[:post_id])
       if params[:post][:title] == "" || params[:post][:content] == "" || params[:post][:start_date] == "" || params[:post][:end_date] == ""
         #flash[:message] = "Must fill in all parts"
         redirect to "/posts/#{@post.id}/edit"
@@ -71,9 +73,9 @@ class PostsController < ApplicationController
     end
   end
 
-  delete '/posts/:id/delete' do
+  delete '/posts/:post_id/delete' do
    if logged_in?
-      @post = Post.find_by_id(params[:id])
+      @post = Post.find_by_id(params[:post_id])
       if @post.user_id == current_user.id
         @post.delete
         redirect to '/posts'

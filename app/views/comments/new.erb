@@ -1,0 +1,13 @@
+<h1>New Comment!</h1>
+
+<form action="/posts/<%=@post.id%>/comments" method="POST">
+
+  <div>
+    <label for="comment_content">Content</label>
+    <input type="text" id="comment_content" name="comment[content]"></input>
+  </div>
+
+  <br><br>
+  <input type="submit" value="Create New Comment"></input>
+
+</form>
