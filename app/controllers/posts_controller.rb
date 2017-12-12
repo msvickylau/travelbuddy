@@ -5,6 +5,8 @@ class PostsController < ApplicationController
     if logged_in?
       @user = User.find_by_id(session[:user_id])
       @posts = Post.all
+      # @post = Post.find_by_id(params[:post_id])
+      # @time_ago = Time.now - @post.updated_at
       erb :'posts/index'
     else
       redirect_if_not_logged_in

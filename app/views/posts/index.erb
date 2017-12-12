@@ -21,9 +21,10 @@
 <% @posts.each do |post| %>
   ----------------
   <h3> <a href="/posts/<%= post.id %>"><%= post.title %></a> </h3>
-  posted by: <%= post.user.username %>,  on  <%= post.created_at %> <br>
-  <%= post.content %> 
+  <p>Posted by: <%= post.user.username %>,  on  <%= post.updated_at %>, <%= Time.now - post.updated_at %> seconds ago. </p>
+  <p><%= post.content %> </p>
+  <p>Destination Tags: <br>
+   |  <% post.destinations.each { |d| %> <%= d.country %>  | <% } %></p>
   <br><br>
-
 <% end %>
 

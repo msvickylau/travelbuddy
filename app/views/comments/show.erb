@@ -1,3 +1,5 @@
+<a href="/posts/<%=@post_id%>" ><input type="button" value="Back to Post" /></a>
+
 <div>
   Posted by: <%= @comment.user.username %>,  on  <%= @comment.updated_at %>, <%= @time_ago %> seconds ago.
   <br><br>
@@ -7,4 +9,5 @@
   <% if @comment.user_id == current_user.id %>
     <a href="/posts/<%=@post_id%>/comments/<%=@comment.id%>/edit" ><input type="button" value="Edit Your comment" /></a>
   <%end%>
+
 </div>
