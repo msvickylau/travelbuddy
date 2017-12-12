@@ -1,6 +1,6 @@
  <h1> <%= @post.title %> </h1>
  
- posted by: <%= @post.user_id %>,  on  <%= @post.updated_at %>, <%= @time_ago %> seconds ago.
+ posted by: <%= @post.user.username %>,  on  <%= @post.updated_at %>, <%= @time_ago %> seconds ago.
  <br><br>
  <%= @post.content %> 
 
@@ -11,6 +11,23 @@
 <!-- User can see edit button, if it is their post -->
 <% if @post.user_id == current_user.id %>
   <a href="/posts/<%=@post.id%>/edit" ><input type="button" value="Edit Your Post" /></a>      
+<%end%>
+
+<br><br>
+
+<h2>Comments from Community Members:</h2>
+
+<% @comments.each do |comment| %>
+  Posted by: <%= comment.user.username %>,  on  <%= comment.created_at %> <br>
+  <%= comment.content %>
+  <br>
+
+  <!-- User can see edit button, if it is their comment -->
+  <% if comment.user_id == current_user.id %>
+    <a href="/posts/<%=@post.id%>/comments/<%=comment.id%>/edit" ><input type="button" value="Edit Your comment" /></a>      
+  <%end%>
+
+  <br>
 <%end%>
 
 

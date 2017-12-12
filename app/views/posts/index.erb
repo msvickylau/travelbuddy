@@ -21,7 +21,7 @@
 <% @posts.each do |post| %>
   ----------------
   <h3> <a href="/posts/<%= post.id %>"><%= post.title %></a> </h3>
-  posted by: <%= post.user_id %>,  on  <%= post.created_at %> <br>
+  posted by: <%= post.user.username %>,  on  <%= post.created_at %> <br>
   <%= post.content %> 
   <br><br>
 

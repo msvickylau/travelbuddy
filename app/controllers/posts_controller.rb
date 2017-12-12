@@ -1,3 +1,4 @@
+require 'pry'
 class PostsController < ApplicationController
   
   get '/posts' do
@@ -19,10 +20,9 @@ class PostsController < ApplicationController
   end
 
   post '/posts' do
-    if params[:post][:title] == "" || params[:post][:content] == "" || params[:post][:start_date] == "" || params[:post][:end_date] == ""
-      # end date needs to be greater than start date.
-      # flash[:message] = "Must fill in all parts"
-      redirect to '/posts/new'
+    if params[:post][:title] == "" || params[:post][:content] == "" || params[:post][:start_date] == "" || params[:post][:end_date] == "" || params[:post][:end_date] < params[:post][:start_date]
+      # flash[:message] = "Must fill in all parts, end date must be after start date."
+      redirect to "/posts/new"
     else
       post = params[:post] #all post params
       post[:user_id] = session[:user_id] 
@@ -32,12 +32,12 @@ class PostsController < ApplicationController
     redirect to "/posts/#{@post.id}"
   end
 
-  get '/posts/:post_id' do  #also index page for comments
+  get '/posts/:post_id' do #shows a post; also index page for comments
     if logged_in?
       @post = Post.find_by_id(params[:post_id])
       @comments = Comment.where("post_id = #{@post.id}") #all comments where post id is == the current post id
       @time_ago = Time.now - @post.updated_at
-      binding.pry
+  
       erb :'posts/show'
     else
       redirect_if_not_logged_in
@@ -50,7 +50,7 @@ class PostsController < ApplicationController
       if @post.user_id == current_user.id
        erb :'posts/edit'
       else
-        redirect to '/posts'
+        redirect to "/posts" #redirect to index
       end
     else
       redirect_if_not_logged_in
@@ -78,9 +78,9 @@ class PostsController < ApplicationController
       @post = Post.find_by_id(params[:post_id])
       if @post.user_id == current_user.id
         @post.delete
-        redirect to '/posts'
+        redirect to "/posts"
       else
-        redirect to '/posts'
+        redirect to "/posts"
       end
     else
       redirect_if_not_logged_in
