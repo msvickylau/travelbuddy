@@ -1,11 +1,10 @@
-posted by: <%= @comment.user_id %>,  on  <%= @comment.updated_at %>, <%= @time_ago %> seconds ago.
- <br><br>
- <%= @comment.content %> 
-
-<br><br>
-<!-- User can see edit button, if it is their comment -->
-<% if @comment.user_id == current_user.id %>
-  <a href="/comment/<%=@comment.id%>/edit" ><input type="button" value="Edit Your comment" /></a>      
-<%end%>
-
-
+<div>
+  Posted by: <%= @comment.user.username %>,  on  <%= @comment.updated_at %>, <%= @time_ago %> seconds ago.
+  <br><br>
+  <%= @comment.content %> 
+  <br>
+  <!-- User can see edit button, if it is their comment -->
+  <% if @comment.user_id == current_user.id %>
+    <a href="/posts/<%=@post_id%>/comments/<%=@comment.id%>/edit" ><input type="button" value="Edit Your comment" /></a>
+  <%end%>
+</div>
