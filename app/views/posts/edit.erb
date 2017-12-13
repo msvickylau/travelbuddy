@@ -7,21 +7,17 @@
   </head>
 
   <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <a class="navbar-brand" href="/login">travelbuddy</a>  
     </nav>
-
     <br><br>
-
     <div style="text-align: center">
       <h4>Edit Your Post</h4>
-    </div><br>
-
+    </div>
+    <br>
     <div class="container" style="width:60%;">
       <form class="form-center" action="/posts/<%=@post.id%>" method="POST">
         <input type="hidden" id="hidden" name="_method" value="PATCH">
-        
         <div class="form-group">
           <label for="post_title">Title</label>
           <input type="text" id="post_title" class="form-control" name="post[title]" value="<%= @post.title %>"> </input>
@@ -37,8 +33,8 @@
         <div>
           <label for="end_date">End Date</label>
           <input type="date" id="end_date" class="form-control" name="post[end_date]" value="<%= @post.end_date %>"></input>
-        </div><br><br>
-
+        </div>
+        <br><br>
         <h4>Edit destinaion tags:</h4>
         <div style="overflow-y: scroll; height:400px;">
           <% Destination.all.each do |d| %>
@@ -51,8 +47,8 @@
         <div style="text-align: center">
           <button type="submit" class="btn btn-primary">Save Changes</button>
         </div>
-      </form><br>
-
+      </form>
+      <br>
       <form action="/posts/<%=@post.id%>/delete" method="POST">
         <input type="hidden" id="hidden" name="_method" value="DELETE">
         <div style="text-align: center">

@@ -7,20 +7,15 @@
   </head>
 
   <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <a class="navbar-brand" href="/login">travelbuddy</a>  
     </nav>
-
     <br><br>
-
     <div style="text-align: center">
       <h4>New Post!</h4>
     </div><br>
-
     <div class="container" style="width:60%;">
       <form class="form-center" action="/posts" method="POST">
-        
         <div class="form-group">
           <label for="post_title">Title</label>
           <input type="text" id="post_title" class="form-control" name="post[title]">
@@ -37,9 +32,7 @@
           <label for="end_date">End Date</label>
           <input type="date" id="end_date" class="form-control" name="post[end_date]">
         </div>
-
         <br><br>
-
         <h4>Select all destinaion tags:</h4>
         <div style="overflow-y: scroll; height:400px;">
           <% Destination.all.each do |d| %>
