@@ -1,39 +1,66 @@
-<h1> Edit Your Post </h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.2/minty/bootstrap.min.css" rel="stylesheet" integrity="sha384-GIcXw8rYyx4xrVfccSt7E7KGw2nAFDG/TNLq9NMPHKH5Rv3aqk6laThLgQFQnIYF" crossorigin="anonymous">
+  </head>
 
-<form action="/posts/<%=@post.id%>" method="POST">
-  <input type="hidden" id="hidden" name="_method" value="PATCH">
+  <body>
 
-  <div>
-    <label for="post_title">Title</label>
-    <input type="text" id="post_title" name="post[title]" value="<%= @post.title %>"> </input>
-  </div>
-  <div>
-    <label for="post_content">Content</label>
-    <input type="text" id="post_content" name="post[content]" value="<%= @post.content %>"> </input>
-  </div>
-  <div>
-    <label for="start_date">Start Date</label>
-    <input type="date" id="start_date" name="post[start_date]" value="<%= @post.start_date %>"> </input>
-  </div>
-  <div>
-    <label for="end_date">End Date</label>
-    <input type="date" id="end_date" name="post[end_date]" value="<%= @post.end_date %>"> </input>
-  </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="/login">travelbuddy</a>  
+    </nav>
 
-  <h3>Destinaion tags:</h3>
+    <br><br>
 
-  <% Destination.all.each do |d| %>
-    <input type="checkbox" name="post[destination_ids][]" value="<%= d.id %>" id="destination_<%= d.id %>"  <%='checked' if @post.destinations.include?(d)%>>
-    <label><%= d.country %></label>
+    <div style="text-align: center">
+      <h4>Edit Your Post</h4>
+    </div><br>
+
+    <div class="container" style="width:60%;">
+      <form class="form-center" action="/posts/<%=@post.id%>" method="POST">
+        <input type="hidden" id="hidden" name="_method" value="PATCH">
+        
+        <div class="form-group">
+          <label for="post_title">Title</label>
+          <input type="text" id="post_title" class="form-control" name="post[title]" value="<%= @post.title %>"> </input>
+        </div>
+        <div class="form-group">
+          <label for="post_content">Content</label>
+          <input type="text" id="post_content" class="form-control" name="post[content]" value="<%= @post.content %>"></input>
+        </div>
+        <div class="form-group">
+          <label for="start_date">Start Date</label>
+          <input type="date" id="start_date" class="form-control" name="post[start_date]" value="<%= @post.start_date %>"></input>
+        </div>
+        <div>
+          <label for="end_date">End Date</label>
+          <input type="date" id="end_date" class="form-control" name="post[end_date]" value="<%= @post.end_date %>"></input>
+        </div><br><br>
+
+        <h4>Edit destinaion tags:</h4>
+        <div style="overflow-y: scroll; height:400px;">
+          <% Destination.all.each do |d| %>
+          <input type="checkbox" name="post[destination_ids][]" value="<%= d.id %>" id="destination_<%= d.id %>"  <%='checked' if @post.destinations.include?(d)%> >
+          <label><%= d.country %></label>
+          <br>
+          <% end %>
+        </div>
+        <br>
+        <div style="text-align: center">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form><br>
+
+      <form action="/posts/<%=@post.id%>/delete" method="POST">
+        <input type="hidden" id="hidden" name="_method" value="DELETE">
+        <div style="text-align: center">
+          <button type="submit" class="btn btn-warning">Delete Post</button>
+        </div>
+      </form>
+    </div>
     <br>
-  <% end %>
-
-  <br><br>
-
-  <input type="submit" value="Save Changes"><br>
-</form>
-
-<form action="/posts/<%=@post.id%>/delete" method="POST">
-  <input type="hidden" id="hidden" name="_method" value="DELETE">
-  <input type="submit" value="Delete Post">
-</form>
+    <br>
+  </body>
+</html>

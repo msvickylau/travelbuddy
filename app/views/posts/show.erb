@@ -23,52 +23,41 @@
         </ul>
       </div>
     </nav>
-
-
+    <br><br>
     <div class="container" style="width:70%;">
-      <br><br>
       <h2><%= @post.title %></h2>
       <p>Posted by: <a href="/users/<%= @post.user.username %>"><%= @post.user.username %></a>,  on  <%= @post.updated_at %>, <%= Time.now - @post.updated_at %> seconds ago.</p>
       <p><em>Travel Dates: <%= @post.start_date %> - <%= @post.end_date %></em></p>
       <p><%= @post.content %></p>
-      <p>Destination Tags: <% @post.destinations.each do |d| %>
+      <p>
+        Destination Tags: <% @post.destinations.each do |d| %>
           <span class="badge badge-success"><%= d.country %></span>
         <%end%>
       </p>
       <!-- User can see edit button, if it is their post -->
       <% if @post.user_id == current_user.id %>
-        <a href="/posts/<%=@post.id%>/edit"><button type="submit" class="btn btn-primary">Edit your post</button></a>      
+        <a href="/posts/<%=@post.id%>/edit"><button type="submit" class="btn btn-warning">Edit your post</button></a>      
       <%end%>
-      <br><br>
     </div>
-
+    <br><br>
     <div class="container" style="width:60%;">
       <h4>Comments:</h4>
       <% @comments.each do |comment| %>
-        <p>
-          Posted by: <a href="/users/<%= comment.user.username %>"><%= comment.user.username %></a>,  on  <%= comment.updated_at %>
-        </p>
+        <p>Posted by: <a href="/users/<%= comment.user.username %>"><%= comment.user.username %></a>,  on  <%= comment.updated_at %></p>
         <p><%= comment.content %></p>
-
         <!-- User can see edit button, if it is their comment -->
         <% if comment.user_id == current_user.id %>
           <a href="/posts/<%=@post.id%>/comments/<%=comment.id%>/edit" ><input type="button" class="btn btn-warning" value="Edit Your comment" /></a>      
         <%end%>
       <%end%>
-
       <br><br>
-
       <div>
         <a href="/posts/<%=@post.id%>/comments/new" ><input type="button" class="btn btn-primary btn-lg btn-block" value="New Comment" /></a>
       </div>
-
     </div>
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   </body>
 </html>
-
-
-
-
-
-
-
