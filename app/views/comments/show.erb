@@ -1,13 +1,24 @@
-<a href="/posts/<%=@post_id%>" ><input type="button" value="Back to Post" /></a>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.2/minty/bootstrap.min.css" rel="stylesheet" integrity="sha384-GIcXw8rYyx4xrVfccSt7E7KGw2nAFDG/TNLq9NMPHKH5Rv3aqk6laThLgQFQnIYF" crossorigin="anonymous">
+  </head>
 
-<div>
-  Posted by: <%= @comment.user.username %>,  on  <%= @comment.updated_at %>, <%= @time_ago %> seconds ago.
-  <br><br>
-  <%= @comment.content %> 
-  <br>
-  <!-- User can see edit button, if it is their comment -->
-  <% if @comment.user_id == current_user.id %>
-    <a href="/posts/<%=@post_id%>/comments/<%=@comment.id%>/edit" ><input type="button" value="Edit Your comment" /></a>
-  <%end%>
-
-</div>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="/login">travelbuddy</a>  
+    </nav>
+    <a href="/posts/<%=@post_id%>"><button type="button" class="btn btn-link disabled">Back to post</button></a>
+    <br><br>
+    <div class="container" style="width:70%;">      
+      <p>Posted by: <a href="/users/<%= @comment.user.username %>"><%= @comment.user.username %></a>,  on  <%= @comment.updated_at %>, <%= Time.now - @comment.updated_at %> seconds ago.</p>
+      <p><%= @comment.content %></p>
+      <!-- User can see edit button, if it is their comment -->
+      <% if @comment.user_id == current_user.id %>
+        <a href="/posts/<%=@post_id%>/comments/<%=@comment.id%>/edit"><button type="submit" class="btn btn-warning">Edit your comment</button></a>      
+      <%end%>
+    </div>
+  </body>
+</html>

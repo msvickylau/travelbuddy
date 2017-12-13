@@ -15,6 +15,7 @@ gem 'json', '>=1.8.3'
 gem 'bcrypt'
 gem 'pry'
 gem 'rails-erd'
+gem 'bootstrap', '~> 4.0.0.beta2'
 
 group :test do
   gem 'rspec'
