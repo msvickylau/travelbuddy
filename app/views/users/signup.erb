@@ -1,13 +1,45 @@
-<header>
-  <div style="text-align: center">
-    <h2>Sign up for Travel Buddy!</h2>
-    <h4>Please fill out below form:</h4>
-    <form action="/signup" method="POST">
-      <p>Username: <input type="text" name="username" placeholder="username"></p>
-      <p>Email: <input type="text" name="email" placeholder="your_email@gmail.com"></p>
-      <p>Password: <input type="text" name="password" placeholder="PaSSw0rd!"></p>
-      <input type="submit" value="Sign Up">
-    </form>
-    Have an account? <a href="/login">Log In</a>
-  </div>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.2/minty/bootstrap.min.css" rel="stylesheet" integrity="sha384-GIcXw8rYyx4xrVfccSt7E7KGw2nAFDG/TNLq9NMPHKH5Rv3aqk6laThLgQFQnIYF" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="/login">travelbuddy</a>  
+    </nav>
+    <br><br>
+    <div style="text-align: center">
+      <h4>Sign Up</h4>
+    </div>
+    <br>
+    <div class="container" style="width:50%;">
+      <form class="form-center" action="/signup" method="POST">
+        <div class="form-group">
+          <label>Username:</label>
+          <input type="text" class="form-control" name="username" placeholder="username">
+        </div>
+        <div class="form-group">
+          <label>Email:</label>
+          <input type="email" class="form-control" name="email" placeholder="your_email@gmail.com">
+        </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="password" class="form-control" name="password" placeholder="PaSSw0rd!">
+        </div>
+        <div style="text-align: center">
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </div>
+      </form>
+    </div>
+    <div style="text-align: center">
+      <p>Have an account? <strong><a href="/login">Log In</a></strong>.</p>
+    </div>
+  </body>
+</html>
+
+
+
+
