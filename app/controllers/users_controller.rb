@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       # binding.pry
       redirect to '/signup'
     elsif 
-      username_exists? || email_exists?
+      username_exists?(params[:username]) || email_exists?(params[:email])
       flash[:message] = "This username and/or email is already in use."
       redirect to '/signup'
     else
@@ -52,6 +52,10 @@ class UsersController < ApplicationController
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       redirect '/posts' #in posts_controller.
+    elsif
+      params[:username] == "" || params[:password] == ""
+      flash[:message] = "Please fill in all parts!"
+      redirect_if_not_logged_in
     else
       flash[:message] = "The username/password you've entered does not match our records. Please try again."
       redirect_if_not_logged_in

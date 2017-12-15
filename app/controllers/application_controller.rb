@@ -37,20 +37,19 @@ class ApplicationController < Sinatra::Base
     def current_user
       @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
     end
-  end
+  
+    def redirect_if_not_logged_in
+      if !logged_in?
+        redirect "/login"
+      end
+    end
 
-  def redirect_if_not_logged_in
-    if !logged_in?
-      redirect "/login"
+    def username_exists?(username)
+      User.find_by(username: username) != nil
+    end
+
+    def email_exists?(email)
+      User.find_by(email: email) != nil
     end
   end
-
-  def username_exists?
-    User.find_by(username: params[:username]) != nil
-  end
-
-  def email_exists?
-    User.find_by(email: params[:email]) != nil
-  end
-
 end #of class
