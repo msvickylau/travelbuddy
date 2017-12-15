@@ -1,7 +1,16 @@
+# require 'pry'
+# require 'rack-flash'
+
+require 'sinatra'
+require 'sinatra/flash'
+
 class UsersController < ApplicationController
+  # use Rack::Flash  
+  register Sinatra::Flash
 
   get '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
+    @posts = Post.where("user_id = #{@user.id}") #all posts where user id is == the current user id
     erb :'users/show'
   end
 
@@ -13,16 +22,19 @@ class UsersController < ApplicationController
     end
   end
 
-
-  #does not let a user sign up with a username/email/password
   post '/signup' do
     if params[:username] == "" || params[:email] == "" || params[:password] == ""
-      flash[:message] = "Please don't leave blank content"
+      flash[:message] = "Please fill in all parts!"
+      # binding.pry
+      redirect to '/signup'
+    elsif 
+      username_exists? || email_exists?
+      flash[:message] = "This username and/or email is already in use."
       redirect to '/signup'
     else
-      @user = User.create(username: params[:username], email: params[:email], password: params[:password])
-      @user.save
-      session[:user_id] = @user.id
+      @new_user = User.create(username: params[:username], email: params[:email].downcase, password: params[:password])
+      @new_user.save
+      session[:user_id] = @new_user.id
       redirect '/posts' #in posts_controller.
     end
   end
@@ -41,7 +53,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect '/posts' #in posts_controller.
     else
-      flash[:message] = "The username/password you've entered is incorrect. Please try again."
+      flash[:message] = "The username/password you've entered does not match our records. Please try again."
       redirect_if_not_logged_in
     end
   end
@@ -49,7 +61,7 @@ class UsersController < ApplicationController
   get '/logout' do
     if logged_in?
       session.clear
-      redirect_if_not_logged_in
+      redirect to '/'
     else
       redirect to '/'
     end

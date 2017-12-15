@@ -1,6 +1,15 @@
 require './config/environment'
 
+require 'pry'
+# require 'sinatra/base'
+# require 'rack-flash'
+
+require 'sinatra'
+require 'sinatra/flash'
+
 class ApplicationController < Sinatra::Base
+  # use Rack::Flash  
+  register Sinatra::Flash
 
   # set :views, Proc.new { File.join(root, "../views/") }
 
@@ -13,7 +22,11 @@ class ApplicationController < Sinatra::Base
 
   get '/' do
     @user = User.find_by_id(session[:user_id])
-    erb :index
+    if logged_in?
+      redirect to '/posts'
+    else
+      erb :index
+    end
   end
 
   helpers do
@@ -30,6 +43,14 @@ class ApplicationController < Sinatra::Base
     if !logged_in?
       redirect "/login"
     end
+  end
+
+  def username_exists?
+    User.find_by(username: params[:username]) != nil
+  end
+
+  def email_exists?
+    User.find_by(email: params[:email]) != nil
   end
 
 end #of class

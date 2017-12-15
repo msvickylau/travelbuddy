@@ -1,5 +1,11 @@
 require 'pry'
+# require 'rack-flash'
+require 'sinatra'
+require 'sinatra/flash'
+
 class CommentsController < ApplicationController
+  # use Rack::Flash  
+  register Sinatra::Flash
 
   # NOTE: Index page for comments is on the posts show page --> '/post/:id' since only comments belong to a post are shown.
   
@@ -10,8 +16,9 @@ class CommentsController < ApplicationController
 
   post '/posts/:post_id/comments' do  #save the created comment
     post_id = params[:post_id]
-    if params[:comment][:content] == "" 
-      redirect to '/posts/#{post_id}/comments/new'
+    if params[:comment][:content] == ""
+      flash[:message] = "Content cannot be blank!"
+      redirect to "/posts/#{post_id}/comments/new"
     else
       comment = params[:comment]
       comment[:post_id] = params[:post_id]
@@ -53,6 +60,7 @@ class CommentsController < ApplicationController
       @post_id = params[:post_id]
       @comment = Comment.find_by_id(params[:comment_id])
       if params[:comment][:content] == ""
+        flash[:message] = "Content cannot be blank!"
         redirect to "/posts/#{@post_id}/comments/#{@comment.id}/edit"
       else
         @comment.update(params[:comment])

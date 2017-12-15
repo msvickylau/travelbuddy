@@ -1,12 +1,15 @@
 require 'pry'
+# require 'rack-flash'
+require 'sinatra'
+require 'sinatra/flash'
+
 class PostsController < ApplicationController
+  register Sinatra::Flash
   
   get '/posts' do
     if logged_in?
       @user = User.find_by_id(session[:user_id])
       @posts = Post.all
-      # @post = Post.find_by_id(params[:post_id])
-      # @time_ago = Time.now - @post.updated_at
       erb :'posts/index'
     else
       redirect_if_not_logged_in
@@ -23,7 +26,7 @@ class PostsController < ApplicationController
 
   post '/posts' do
     if params[:post][:title] == "" || params[:post][:content] == "" || params[:post][:start_date] == "" || params[:post][:end_date] == "" || params[:post][:end_date] < params[:post][:start_date]
-      # flash[:message] = "Must fill in all parts, end date must be after start date."
+      flash[:message] = "Please fill in all parts! End Date must be after Start Date."
       redirect to "/posts/new"
     else
       post = params[:post] #all post params
@@ -38,8 +41,7 @@ class PostsController < ApplicationController
     if logged_in?
       @post = Post.find_by_id(params[:post_id])
       @comments = Comment.where("post_id = #{@post.id}") #all comments where post id is == the current post id
-      @time_ago = Time.now - @post.updated_at
-  
+     
       erb :'posts/show'
     else
       redirect_if_not_logged_in
@@ -62,8 +64,8 @@ class PostsController < ApplicationController
   patch '/posts/:post_id' do
     if logged_in?
       @post = Post.find_by_id(params[:post_id])
-      if params[:post][:title] == "" || params[:post][:content] == "" || params[:post][:start_date] == "" || params[:post][:end_date] == ""
-        #flash[:message] = "Must fill in all parts"
+      if params[:post][:title] == "" || params[:post][:content] == "" || params[:post][:start_date] == "" || params[:post][:end_date] == "" || params[:post][:end_date] < params[:post][:start_date]
+        flash[:message] = "Please fill in all parts! End Date must be after Start Date."
         redirect to "/posts/#{@post.id}/edit"
       else
         @post.update(params[:post])
