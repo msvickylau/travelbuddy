@@ -39,6 +39,7 @@ class PostsController < ApplicationController
 
   get '/posts/:post_id' do #shows a post; also index page for comments
     if logged_in?
+      @user = User.find_by_id(session[:user_id])
       @post = Post.find_by_id(params[:post_id])
       @comments = Comment.where("post_id = #{@post.id}") #all comments where post id is == the current post id
      
