@@ -1,6 +1,6 @@
-Travel buddy app were users can create an account/sign in, view what others have posted on their travels, 
-and comment on their post. Or they can create their own post by selecting the destination(s), writing 
-content of their travels, posting it and reply with comments on posts.
+Travelbuddy is an app were users can create an account/sign in, view what others have posted on their 
+travels, and comment on their post. Or they can create their own post by selecting the destination(s), 
+writing content of their travels, posting it and reply with comments on posts.
 
 A User can delete their own post only, and any comments under that post will be deleted regardless of 
 the author. Users can delete a comment from a published post.
