@@ -7,7 +7,6 @@
   </head>
 
   <body>
-    
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <a class="navbar-brand" href="/posts">travelbuddy</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
@@ -24,11 +23,19 @@
         </ul>
       </div>
     </nav>
-
     <br><br>
     <div class="container" style="width:70%;">
       <h2><%= @post.title %></h2>
-      <p>Posted by: <a href="/users/<%= @post.user.username %>"><%= @post.user.username %></a>,  on  <%= @post.updated_at %>, <%= Time.now - @post.updated_at %> seconds ago.</p>
+      <p>
+        Posted by: <a href="/users/<%= @post.user.username %>"><%= @post.user.username %></a>,  on  <%= @post.updated_at.gmtime.localtime  %>,
+        <% if Time.now - @post.updated_at < 3600 %>
+          <%= ((Time.now - @post.updated_at)/60).round %> minuets ago. </p>
+        <% elsif Time.now - @post.updated_at < 86400 %>
+          <%= ((Time.now - @post.updated_at)/60 /60).round %> hours ago. </p>
+        <% else %>
+          <%= ((Time.now - @post.updated_at)/60 /60 /60).round %> days ago. </p>
+        <%end%>
+      </p>
       <p><em>Travel Dates: <%= @post.start_date %> - <%= @post.end_date %></em></p>
       <p><%= @post.content %></p>
       <p>
@@ -45,7 +52,18 @@
     <div class="container" style="width:60%;">
       <h4>Comments:</h4>
       <% @comments.each do |comment| %>
-        <p>Posted by: <a href="/users/<%= comment.user.username %>"><%= comment.user.username %></a>,  on  <%= comment.updated_at %></p>
+        <p>
+          Posted by: <a href="/users/<%= comment.user.username %>"><%= comment.user.username %></a>,  on  <%= comment.updated_at.gmtime.localtime  %>,
+          <% if Time.now-comment.updated_at < 60 %>
+            <%= (Time.now - comment.updated_at).round %> seconds ago. </p>
+          <% elsif Time.now - comment.updated_at < 3600 %>
+            <%= ((Time.now - comment.updated_at)/60).round %> minuets ago. </p>
+          <% elsif Time.now - comment.updated_at < 86400 %>
+            <%= ((Time.now - comment.updated_at)/60 /60).round %> hours ago. </p>
+          <% else %>
+            <%= ((Time.now - comment.updated_at)/60 /60 /60).round %> days ago. </p>
+          <%end%>
+        </p>
         <p><%= comment.content %></p>
         <!-- User can see edit button, if it is their comment -->
         <% if comment.user_id == current_user.id %>

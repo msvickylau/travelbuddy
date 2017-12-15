@@ -37,7 +37,18 @@
       <h2>View all post by the community</h2><br>
       <% @posts.each do |post| %>
         <h4> <a href="/posts/<%= post.id %>"><%= post.title %></a> </h4>
-        <p>Posted by: <a href="/users/<%= post.user.username %>"><%= post.user.username %></a>,  on  <%= post.updated_at %>, <%= Time.now - post.updated_at %> seconds ago. </p>
+        <p>
+          Posted by: <a href="/users/<%= post.user.username %>"><%= post.user.username %></a>,  on  <%= post.updated_at.gmtime.localtime  %>,
+          <% if Time.now-post.updated_at < 60 %>
+            <%= (Time.now - post.updated_at).round %> seconds ago. </p>
+          <% elsif Time.now-post.updated_at < 3600 %>
+            <%= ((Time.now - post.updated_at)/60).round %> minuets ago. </p>
+          <% elsif Time.now-post.updated_at < 86400 %>
+            <%= ((Time.now - post.updated_at)/60 /60).round %> hours ago. </p>
+          <% else %>
+            <%= ((Time.now - post.updated_at)/60 /60 /60).round %> days ago. </p>
+          <%end%>
+        </p>
         <p><em>Travel Dates: <%= post.start_date %> - <%= post.end_date %></em></p>
         <p><%= post.content %> </p>
         <p>

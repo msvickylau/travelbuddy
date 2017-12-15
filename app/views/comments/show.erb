@@ -13,7 +13,9 @@
     <a href="/posts/<%=@post_id%>"><button type="button" class="btn btn-link disabled">Back to post</button></a>
     <br><br>
     <div class="container" style="width:70%;">      
-      <p>Posted by: <a href="/users/<%= @comment.user.username %>"><%= @comment.user.username %></a>,  on  <%= @comment.updated_at %>, <%= Time.now - @comment.updated_at %> seconds ago.</p>
+      <p>
+        Posted by: <a href="/users/<%= @comment.user.username %>"><%= @comment.user.username %></a>,  on  <%= @comment.updated_at.gmtime.localtime  %>, <%= (Time.now - @comment.updated_at).round %> seconds ago.
+      </p>
       <p><%= @comment.content %></p>
       <!-- User can see edit button, if it is their comment -->
       <% if @comment.user_id == current_user.id %>
