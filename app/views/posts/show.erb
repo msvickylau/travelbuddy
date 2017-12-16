@@ -28,7 +28,9 @@
       <h2><%= @post.title %></h2>
       <p>
         Posted by: <a href="/users/<%= @post.user.username %>"><%= @post.user.username %></a>,  on  <%= @post.updated_at.gmtime.localtime  %>,
-        <% if Time.now - @post.updated_at < 3600 %>
+        <% if Time.now - @post.updated_at < 60 %>
+          <%= (Time.now - @post.updated_at).round %> seconds ago. </p>
+        <% elsif Time.now - @post.updated_at < 3600 %>
           <%= ((Time.now - @post.updated_at)/60).round %> minuets ago. </p>
         <% elsif Time.now - @post.updated_at < 86400 %>
           <%= ((Time.now - @post.updated_at)/60 /60).round %> hours ago. </p>
