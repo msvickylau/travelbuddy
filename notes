@@ -27,7 +27,3 @@ MODELS
   COMMENTS
   * A comment belongs_to a post
   * A comment belongs_to a user
-
-
-
-
