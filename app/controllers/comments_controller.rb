@@ -1,13 +1,11 @@
 require 'pry'
-# require 'rack-flash'
 require 'sinatra'
 require 'sinatra/flash'
 
 class CommentsController < ApplicationController
-  # use Rack::Flash  
   register Sinatra::Flash
 
-  # NOTE: Index page for comments is on the posts show page --> '/post/:id' since only comments belong to a post are shown.
+  # NOTE: Index page for comments is on the posts show page --> '/post/:id' since only comments belonging to a post are shown.
   
   get '/posts/:post_id/comments/new' do #create comment
     @post = Post.find_by_id(params[:post_id])
@@ -28,7 +26,6 @@ class CommentsController < ApplicationController
     end
     redirect to "/posts/#{post_id}/comments/#{@comment.id}"
   end
-
 
   get '/posts/:post_id/comments/:comment_id' do #show a single comment
     if logged_in?

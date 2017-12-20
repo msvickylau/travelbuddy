@@ -1,5 +1,4 @@
 require 'pry'
-# require 'rack-flash'
 require 'sinatra'
 require 'sinatra/flash'
 
@@ -42,7 +41,6 @@ class PostsController < ApplicationController
       @user = User.find_by_id(session[:user_id])
       @post = Post.find_by_id(params[:post_id])
       @comments = Comment.where("post_id = #{@post.id}") #all comments where post id is == the current post id
-     
       erb :'posts/show'
     else
       redirect_if_not_logged_in

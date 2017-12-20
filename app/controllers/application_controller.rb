@@ -1,17 +1,10 @@
 require './config/environment'
-
 require 'pry'
-# require 'sinatra/base'
-# require 'rack-flash'
-
 require 'sinatra'
 require 'sinatra/flash'
 
 class ApplicationController < Sinatra::Base
-  # use Rack::Flash  
   register Sinatra::Flash
-
-  # set :views, Proc.new { File.join(root, "../views/") }
 
   configure do
     set :public_folder, 'public'
