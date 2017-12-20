@@ -1,11 +1,8 @@
-# require 'pry'
-# require 'rack-flash'
-
+require 'pry'
 require 'sinatra'
 require 'sinatra/flash'
 
 class UsersController < ApplicationController
-  # use Rack::Flash  
   register Sinatra::Flash
 
   get '/users/:slug' do
@@ -25,11 +22,18 @@ class UsersController < ApplicationController
   post '/signup' do
     if params[:username] == "" || params[:email] == "" || params[:password] == ""
       flash[:message] = "Please fill in all parts!"
-      # binding.pry
       redirect to '/signup'
     elsif 
       username_exists?(params[:username]) || email_exists?(params[:email])
       flash[:message] = "This username and/or email is already in use."
+      redirect to '/signup'
+    elsif
+      params[:username].include?(" ") || params[:username].include?("&") || params[:username].include?("=") || params[:username].include?("<") || params[:username].include?(">") || params[:username].include?("+") || params[:username].include?(",") || params[:username].include?("..")
+      flash[:message] = "Usernames can't contain an ampersand (&), equal sign (=), brackets (<,>), plus sign (+), comma (,), or more than one period (.) in a row."
+      redirect to '/signup'
+    elsif 
+      params[:password].length < 8
+      flash[:message] = "Passwords must contain a minimum of 8 characters"
       redirect to '/signup'
     else
       @new_user = User.create(username: params[:username], email: params[:email].downcase, password: params[:password])
@@ -65,7 +69,7 @@ class UsersController < ApplicationController
   get '/logout' do
     if logged_in?
       session.clear
-      redirect to '/'
+      redirect to '/' 
     else
       redirect to '/'
     end
