@@ -14,7 +14,7 @@
     <br><br>
     <div class="container" style="width:70%;">      
       <p>
-        Posted by: <a href="/users/<%= @comment.user.username %>"><%= @comment.user.username %></a>,  on  <%= @comment.updated_at.gmtime.localtime  %>, <%= (Time.now - @comment.updated_at).round %> seconds ago.
+        Posted by: <a href="/users/<%= @comment.user.username %>"><%= @comment.user.username %></a>,  on  <%= @comment.updated_at.gmtime.localtime  %>, <%= render_time(@comment.updated_at) %>
       </p>
       <p><%= @comment.content %></p>
       <!-- User can see edit button, if it is their comment -->

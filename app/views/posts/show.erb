@@ -27,16 +27,7 @@
     <div class="container" style="width:70%;">
       <h2><%= @post.title %></h2>
       <p>
-        Posted by: <a href="/users/<%= @post.user.username %>"><%= @post.user.username %></a>,  on  <%= @post.updated_at.gmtime.localtime  %>,
-        <% if Time.now - @post.updated_at < 60 %>
-          <%= (Time.now - @post.updated_at).round %> seconds ago. </p>
-        <% elsif Time.now - @post.updated_at < 3600 %>
-          <%= ((Time.now - @post.updated_at)/60).round %> minuets ago. </p>
-        <% elsif Time.now - @post.updated_at < 86400 %>
-          <%= ((Time.now - @post.updated_at)/60 /60).round %> hours ago. </p>
-        <% else %>
-          <%= ((Time.now - @post.updated_at)/60 /60 /60).round %> days ago. </p>
-        <%end%>
+        Posted by: <a href="/users/<%= @post.user.username %>"><%= @post.user.username %></a>,  on  <%= @post.updated_at.gmtime.localtime  %>, <%= render_time(@post.updated_at) %>
       </p>
       <p><em>Travel Dates: <%= @post.start_date %> - <%= @post.end_date %></em></p>
       <p><%= @post.content %></p>
@@ -55,16 +46,7 @@
       <h4>Comments:</h4>
       <% @comments.each do |comment| %>
         <p>
-          Posted by: <a href="/users/<%= comment.user.username %>"><%= comment.user.username %></a>,  on  <%= comment.updated_at.gmtime.localtime  %>,
-          <% if Time.now-comment.updated_at < 60 %>
-            <%= (Time.now - comment.updated_at).round %> seconds ago. </p>
-          <% elsif Time.now - comment.updated_at < 3600 %>
-            <%= ((Time.now - comment.updated_at)/60).round %> minuets ago. </p>
-          <% elsif Time.now - comment.updated_at < 86400 %>
-            <%= ((Time.now - comment.updated_at)/60 /60).round %> hours ago. </p>
-          <% else %>
-            <%= ((Time.now - comment.updated_at)/60 /60 /60).round %> days ago. </p>
-          <%end%>
+          Posted by: <a href="/users/<%= comment.user.username %>"><%= comment.user.username %></a>,  on  <%= comment.updated_at.gmtime.localtime  %>, <%= render_time(comment.updated_at) %>
         </p>
         <p><%= comment.content %></p>
         <!-- User can see edit button, if it is their comment -->

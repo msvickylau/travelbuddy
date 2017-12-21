@@ -5,7 +5,7 @@ require 'sinatra/flash'
 class PostsController < ApplicationController
   register Sinatra::Flash
   
-  get '/posts' do
+  get '/posts' do #post index page
     if logged_in?
       @user = User.find_by_id(session[:user_id])
       @posts = Post.all
@@ -15,7 +15,7 @@ class PostsController < ApplicationController
     end
   end
 
-  get '/posts/new' do
+  get '/posts/new' do #new post
     if logged_in?
       erb :'posts/new'
     else
@@ -23,14 +23,13 @@ class PostsController < ApplicationController
     end
   end
 
-  post '/posts' do
+  post '/posts' do #create post
     if params[:post][:title] == "" || params[:post][:content] == "" || params[:post][:start_date] == "" || params[:post][:end_date] == "" || params[:post][:end_date] < params[:post][:start_date]
       flash[:message] = "Please fill in all parts! End Date must be after Start Date."
       redirect to "/posts/new"
     else
-      post = params[:post] #all post params
-      post[:user_id] = session[:user_id] 
-      @post = Post.create(post) #create post with all post params and user_id
+      @post = Post.new(params[:post])
+      @post.user_id = current_user.id
       @post.save
     end
     redirect to "/posts/#{@post.id}"
@@ -47,7 +46,7 @@ class PostsController < ApplicationController
     end
   end
 
-  get '/posts/:post_id/edit' do
+  get '/posts/:post_id/edit' do #edit post
     if logged_in?
       @post = Post.find_by_id(params[:post_id])
       if @post.user_id == current_user.id
@@ -60,7 +59,7 @@ class PostsController < ApplicationController
     end
   end
 
-  patch '/posts/:post_id' do
+  patch '/posts/:post_id' do #update post
     if logged_in?
       @post = Post.find_by_id(params[:post_id])
       if params[:post][:title] == "" || params[:post][:content] == "" || params[:post][:start_date] == "" || params[:post][:end_date] == "" || params[:post][:end_date] < params[:post][:start_date]
@@ -76,7 +75,7 @@ class PostsController < ApplicationController
     end
   end
 
-  delete '/posts/:post_id/delete' do
+  delete '/posts/:post_id/delete' do #delete post
    if logged_in?
       @post = Post.find_by_id(params[:post_id])
       if @post.user_id == current_user.id

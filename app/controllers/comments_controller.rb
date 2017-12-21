@@ -7,12 +7,12 @@ class CommentsController < ApplicationController
 
   # NOTE: Index page for comments is on the posts show page --> '/post/:id' since only comments belonging to a post are shown.
   
-  get '/posts/:post_id/comments/new' do #create comment
+  get '/posts/:post_id/comments/new' do #new comment
     @post = Post.find_by_id(params[:post_id])
     erb :'comments/new'
   end
 
-  post '/posts/:post_id/comments' do  #save the created comment
+  post '/posts/:post_id/comments' do  #create comment
     post_id = params[:post_id]
     if params[:comment][:content] == ""
       flash[:message] = "Content cannot be blank!"
@@ -52,7 +52,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  patch '/posts/:post_id/comments/:comment_id' do
+  patch '/posts/:post_id/comments/:comment_id' do #update comment
     if logged_in?
       @post_id = params[:post_id]
       @comment = Comment.find_by_id(params[:comment_id])

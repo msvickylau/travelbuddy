@@ -6,6 +6,8 @@ require 'sinatra/flash'
 class ApplicationController < Sinatra::Base
   register Sinatra::Flash
 
+  include ViewHelpers
+
   configure do
     set :public_folder, 'public'
     set :views, "app/views"
